@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="employeesDao" >
+
+	<select id="viewAllEmployees" resultType="EmployeesVO">
+		SELECT 		/* [employeesDao.xml][viewAllEmployees] */
+					E.EMPLOYEES_ID employeeId , E.LAST_NAME lastName, E.POSITION_ID positionId, 
+   					E.JOB_ID jobId, E.SALARY salary, E.DEPARTMENT_NAME departmentName <!-- P.POSITION position --> 
+		FROM 		EMPLOYEES E	<!-- POSITION P -->
+		<!-- WHERE		E.POSITION_ID = P.POSITION_ID -->
+	</select>
+	
+	<insert id="doAddNewEmployee" parameterType="EmployeesVO">
+		INSERT INTO	/* [employeesDao.xml][doAddNewEmployee] */
+					EMPLOYEES (
+ 		 			 EMPLOYEES_ID, LAST_NAME, POSITION_ID, 
+  					 JOB_ID, SALARY, DEPARTMENT_NAME) 
+		VALUES		 ( EMPLOYEE_ID_SEQ.NEXTVAL,
+					 #{lastName}, 
+					 1 ,
+					 #{jobId},
+					 #{salary},
+					 null )
+	</insert>
+	
+	<delete id="doDeleteEmployee" parameterType="string">
+		DELETE	/* [employeesDao.xml][doDeleteEmployee] */
+		FROM	EMPLOYEES
+		WHERE	EMPLOYEES_ID = #{employeeId}
+	</delete>
+	
+	<select id="getEmployeeById" resultType="EmployeesVO" parameterType="string">
+		SELECT 		/* [employeesDao.xml][viewAllEmployees] */
+					E.EMPLOYEES_ID employeeId , E.LAST_NAME lastName, E.POSITION_ID positionId, 
+   					E.JOB_ID jobId, E.SALARY salary, E.DEPARTMENT_NAME departmentName, P.POSITION position 
+		FROM 		EMPLOYEES E, POSITION P
+		WHERE		E.POSITION_ID = P.POSITION_ID
+		AND			EMPLOYEES_ID = #{employeeId}
+	</select>
+	
+</mapper>
