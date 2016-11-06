@@ -3,11 +3,17 @@
 						"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+		
+
 	<typeAliases>
+		<typeAlias type="com.psy.position.vo.PositionVO" alias="PositionVO"/>
+		<typeAlias type="com.psy.departments.vo.DepartmentsVO" alias="DepartmentsVO"/>
 		<typeAlias type="com.psy.employees.vo.EmployeesVO" alias="EmployeesVO"/>
 	</typeAliases>
 
 	<mappers>
+		<mapper resource="com/psy/position/dao/impl/sql/positionDao.xml"/>
+		<mapper resource="com/psy/departments/dao/impl/sql/departmentsDao.xml"/>
 		<mapper resource="com/psy/employees/dao/impl/sql/employeesDao.xml" />
 	</mappers>
 </configuration>

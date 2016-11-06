@@ -4,20 +4,43 @@
 
 <mapper namespace="employeesDao" >
 
-	<select id="viewAllEmployees" resultType="EmployeesVO">
+	<resultMap type="PositionVO" id="PositionVO">
+		<result property="positionId" column="POSITION_ID" />
+		<result property="position" column="POSITION" />
+	</resultMap>
+	
+	<resultMap type="DepartmentsVO" id="DepartmentsVO">
+		<result property="departmentId" column="DEPARTMENT_ID" />
+		<result property="departmentName" column="DEPARTMENT_NAME" />
+	</resultMap>
+	
+	<resultMap type="EmployeesVO" id="EmployeesVO">
+		<result property="employeeId" column="EMPLOYEES_ID" />
+		<result property="lastName" column="LAST_NAME" />
+		<result property="jobId" column="JOB_ID" />
+		<result property="salary" column="SALARY" />
+		<result property="positionId" column="POSITION_ID" />
+		<result property="departmentId" column="DEPARTMENT_ID" />
+		<collection property="positionVO" resultMap="PositionVO"/>
+		<collection property="departmentsVO" resultMap="DepartmentsVO"/>
+	</resultMap>
+
+	<select id="viewAllEmployees" resultMap="EmployeesVO">
 		SELECT 		/* [employeesDao.xml][viewAllEmployees] */
-					E.EMPLOYEES_ID employeeId , E.LAST_NAME lastName, E.POSITION_ID positionId, 
-   					E.JOB_ID jobId, E.SALARY salary, E.DEPARTMENT_NAME departmentName <!-- P.POSITION position --> 
-		FROM 		EMPLOYEES E	<!-- POSITION P -->
-		<!-- WHERE		E.POSITION_ID = P.POSITION_ID -->
+					E.EMPLOYEES_ID , E.LAST_NAME, P.POSITION_ID, 
+   					E.JOB_ID, E.SALARY, D.DEPARTMENT_NAME, P.POSITION
+		FROM 		EMPLOYEES E	,POSITION P, DEPARTMENTS D
+		WHERE		E.POSITION_ID = P.POSITION_ID 
+		AND			D.DEPARTMENT_ID(+) = E.DEPARTMENT_ID
+		ORDER		BY	EMPLOYEES_ID	ASC
 	</select>
 	
 	<insert id="doAddNewEmployee" parameterType="EmployeesVO">
 		INSERT INTO	/* [employeesDao.xml][doAddNewEmployee] */
 					EMPLOYEES (
  		 			 EMPLOYEES_ID, LAST_NAME, POSITION_ID, 
-  					 JOB_ID, SALARY, DEPARTMENT_NAME) 
-		VALUES		 ( EMPLOYEE_ID_SEQ.NEXTVAL,
+  					 JOB_ID, SALARY, DEPARTMENT_ID) 
+		VALUES		 ( EMPLOYEES_ID_SEQ.NEXTVAL,
 					 #{lastName}, 
 					 1 ,
 					 #{jobId},
@@ -31,13 +54,20 @@
 		WHERE	EMPLOYEES_ID = #{employeeId}
 	</delete>
 	
-	<select id="getEmployeeById" resultType="EmployeesVO" parameterType="string">
+	<select id="getEmployeeById" resultMap="EmployeesVO" parameterType="string">
 		SELECT 		/* [employeesDao.xml][viewAllEmployees] */
-					E.EMPLOYEES_ID employeeId , E.LAST_NAME lastName, E.POSITION_ID positionId, 
-   					E.JOB_ID jobId, E.SALARY salary, E.DEPARTMENT_NAME departmentName, P.POSITION position 
-		FROM 		EMPLOYEES E, POSITION P
-		WHERE		E.POSITION_ID = P.POSITION_ID
-		AND			EMPLOYEES_ID = #{employeeId}
+					E.EMPLOYEES_ID , E.LAST_NAME, P.POSITION_ID, 
+   					E.JOB_ID, E.SALARY, D.DEPARTMENT_NAME, P.POSITION
+		FROM 		EMPLOYEES E	,POSITION P, DEPARTMENTS D
+		WHERE		E.POSITION_ID = P.POSITION_ID 
+		AND			D.DEPARTMENT_ID(+) = E.DEPARTMENT_ID
+		AND			E.EMPLOYEES_ID = #{employeeId}
 	</select>
+	
+	<update id="doModifyJobId" parameterType="EmployeesVO">
+		UPDATE	EMPLOYEES
+		SET		JOB_ID	= #{jobId}
+		WHERE	EMPLOYEES_ID = #{employeeId}
+	</update>
 	
 </mapper>

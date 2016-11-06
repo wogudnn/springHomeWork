@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="departmentsService" class="com.psy.departments.service.impl.DepartmentsServiceImpl">
+		<property name="departmentsBiz" ref="departmentsBiz"/>	
+	</bean>
+	
+	<bean id="departmentsBiz" class="com.psy.departments.biz.impl.DepartmentsBizImpl">
+		<property name="departmentsDao" ref="departmentsDao"/>
+	</bean>
+	
+	<bean id="departmentsDao" class="com.psy.departments.dao.impl.DepartmentsDaoImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+
+</beans>

@@ -16,4 +16,6 @@ public interface EmployeesDao {
 
 	public int doLevelUpEmployeePosition(String employeeId);
 
+	public int doModifyJobId(EmployeesVO employee);
+
 }

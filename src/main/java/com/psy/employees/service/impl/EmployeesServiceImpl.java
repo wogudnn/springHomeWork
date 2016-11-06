@@ -34,4 +34,8 @@ public class EmployeesServiceImpl implements EmployeesService {
 	public boolean doLevelUpEmployeePosition(String employeeId) {
 		return employeesBiz.doLevelUpEmployeePosition(employeeId);
 	}
+	@Override
+	public boolean doModifyJobId(EmployeesVO employee) {
+		return employeesBiz.doModifyJobId(employee);
+	}
 }

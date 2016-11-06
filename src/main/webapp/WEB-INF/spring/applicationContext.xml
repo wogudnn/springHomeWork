@@ -7,6 +7,15 @@
 	
 	<mvc:annotation-driven />
 	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="urlInterceptor" class="com.psy.common.interceptor.URLInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<bean class="com.psy.common.exception.handler.ApplicationExceptionHandler"/>
+	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -16,6 +25,15 @@
 
 	<bean id="employeesController" class="com.psy.employees.web.EmployeesController">
 		<property name="employeesService" ref="employeesService"/>
+		<property name="departmentsService" ref="departmentsService"/>
+	</bean>
+	
+	<bean id="positionController" class="com.psy.position.web.PositionController">
+		<property name="positionService" ref="positionService"></property>
+	</bean>
+	
+	<bean id="departmentsController" class="com.psy.departments.web.DepartmentsController">
+		<property name="departmentsService" ref="departmentsService"/>
 	</bean>
 
 </beans>

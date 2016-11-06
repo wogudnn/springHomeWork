@@ -35,4 +35,8 @@ public class EmployeesBizImpl implements EmployeesBiz {
 	public boolean doLevelUpEmployeePosition(String employeeId) {
 		return employeesDao.doLevelUpEmployeePosition(employeeId)>0;
 	}
+	@Override
+	public boolean doModifyJobId(EmployeesVO employee) {
+		return employeesDao.doModifyJobId(employee)>0;
+	}
 }

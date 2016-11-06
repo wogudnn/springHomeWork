@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 
+import com.psy.departments.vo.DepartmentsVO;
 import com.psy.position.vo.PositionVO;
 
 public class EmployeesVO {
@@ -25,13 +26,23 @@ public class EmployeesVO {
 	@Range(min = 0, max = Integer.MAX_VALUE, message = "연봉이 비었습니다.!")
 	private int salary;
 
-	private String departmentName;
+	private String departmentId;
 	private PositionVO positionVO;
+	private DepartmentsVO departmentsVO;
 	
 	public EmployeesVO() {
 		positionVO = new PositionVO();
+		departmentsVO = new DepartmentsVO();
 	}
 	
+	public DepartmentsVO getDepartmentsVO() {
+		return departmentsVO;
+	}
+
+	public void setDepartmentsVO(DepartmentsVO departmentsVO) {
+		this.departmentsVO = departmentsVO;
+	}
+
 	public PositionVO getPositionVO() {
 		return positionVO;
 	}
@@ -39,8 +50,6 @@ public class EmployeesVO {
 	public void setPositionVO(PositionVO positionVO) {
 		this.positionVO = positionVO;
 	}
-
-
 
 	public String getPositionId() {
 		return positionId;
@@ -82,6 +91,14 @@ public class EmployeesVO {
 		this.salary = salary;
 	}
 
+	public String getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+
 	/*public void setSalary(String salary) {
 		try {
 			this.salary = Integer.parseInt(salary);
@@ -89,13 +106,6 @@ public class EmployeesVO {
 			this.salary = 0;
 		}
 	}
-*/
-	public String getDepartmentName() {
-		return departmentName;
-	}
-
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
-	}
-
+	 */
+	
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD//Mapper 3.0//EN"
+				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="departmentsDao">
+	<select id="viewAllDepartments" resultType="DepartmentsVO">
+		SELECT	/*[departmentsDao.xml][viewAllDepartments]*/
+				DEPARTMENT_ID departmentId
+				, DEPARTMENT_NAME departmentName
+		FROM	DEPARTMENTS
+	</select>
+	
+	<update id="doSelectDepartment" parameterType="map">
+		UPDATE	/*[departmentsDao.xml][doSelectDepartment]*/
+				EMPLOYEES
+		SET		DEPARTMENT_ID = #{departmentId}
+		WHERE	EMPLOYEES_ID = #{employeeId}
+	</update>
+	
+	<insert id="doAddNewDepartment" parameterType="DepartmentsVO">
+		INSERT INTO /*[departmentsDao.xml][doAddNewDepartment]*/
+			DEPARTMENTS (
+  						 DEPARTMENT_ID, DEPARTMENT_NAME
+  						 ) 
+		VALUES 			( DEPARTMENT_ID_SEQ.NEXTVAL,
+ 							#{departmentName} 
+ 						)	
+	</insert>
+	
+	<delete id="doDeleteDepartment" parameterType="string">
+		DELETE	
+		FROM	DEPARTMENTS
+		WHERE	DEPARTMENT_ID = #{departmentId}
+	</delete>
+	
+</mapper>

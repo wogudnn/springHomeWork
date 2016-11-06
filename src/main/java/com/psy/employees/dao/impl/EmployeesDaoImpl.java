@@ -29,4 +29,10 @@ public class EmployeesDaoImpl extends SqlSessionDaoSupport implements EmployeesD
 	public int doLevelUpEmployeePosition(String employeeId) {
 		return getSqlSession().update("employeesDao.doLevelUpEmployeePosition");
 	}
+	@Override
+	public int doModifyJobId(EmployeesVO employee) {
+		logger.info(employee.getJobId());
+		logger.info(employee.getEmployeeId());
+		return getSqlSession().update("employeesDao.doModifyJobId",employee);
+	}
 }

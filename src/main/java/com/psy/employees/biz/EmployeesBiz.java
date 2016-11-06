@@ -16,4 +16,6 @@ public interface EmployeesBiz {
 
 	public boolean doLevelUpEmployeePosition(String employeeId);
 
+	public boolean doModifyJobId(EmployeesVO employee);
+
 }
